@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
     <head>
         <title>Render Your CV!</title>
@@ -9,52 +9,86 @@
     </head>
     <body>
 
-        <form method="post">
-
-            <p>Hobbies</p>
-            <div class="box">
-                
-                {% for h in hobbies %}
-                    <li>{{h}}</li>
-                {% endfor %}
-
-                <br>
-                <textarea name="hobbie"></textarea>
-
-                <br>
-                <button formaction="{{ url_for('form4') }}" formmethod="post">Add</button>
-
-            </div>
+        <p>Job References</p>
+        <div class="box">
             
-            <p>Job References</p>
-            <div class="box">
-                
-                {% for r in references %}
-                    {{r[0]}} - {{r[1]}}<br> {{r[2]}} <br> Phone: {{r[3]}}
-                    <br> <br>
-                {% endfor %}
-                <br>
+            <ul id="references"></ul>
+            <br>
 
-                <div class="grid_job">
-                    <label>Name</label>
-                    <label>Job</label>
-                    <input type="text" name="name">
-                    <input type="text" name="job">
+            <div class="grid_job">
+                <label>Name</label>
+                <label>Job</label>
+                <input type="text" id="name">
+                <input type="text" id="job">
 
-                    <label>Email</label>
-                    <label>Phone</label>
-                    <input type="text" name="email">
-                    <input type="number" name="phone">
-                </div>
-
-                <br>
-                <button formaction="{{ url_for('form4') }}" formmethod="post">Add</button>
-
+                <label>Email</label>
+                <label>Phone</label>
+                <input type="text" id="email">
+                <input type="number" id="phone">
             </div>
 
             <br>
-            <button formaction="{{ url_for('render_curriculum') }}" formmethod="post">Continue</button>
+            <button onclick="add_data(0)">Add Reference!</button>
 
+        </div> 
+
+        <p>Hobbies</p>
+        <div class="box">
+            
+            <ul id="hobbies"></ul>
+
+            <br>
+            <textarea id="hobbie"></textarea>
+
+            <br>
+            <button onclick="add_data(1)">Add Hobbie!</button>
+
+        </div>
+        <br>
+
+        <form action="{{ url_for('render_curriculum') }}" method="POST">
+            <button onclick="sent_data()">Render CV!</button>
         </form>
+
+        <script>
+            var j_matrix = [[], []];
+            var div_list = [document.getElementById('references'), document.getElementById('hobbies')];
+            var id_mat = [['name', 'job','email','phone'], ['hobbie']];
+            function add_data(index){
+                let new_li = document.createElement('li');
+                let JSON_value = "", value_list = []; 
+                for (let i = 0; i < id_mat[index].length; i++){
+                    value = String(document.getElementById(id_mat[index][i]).value);
+                    document.getElementById(id_mat[index][i]).value = "";
+                    JSON_value += value;
+                    if (i != id_mat[index].length-1) JSON_value += ",";
+                    value_list.push(value);
+                }
+                j_matrix[index].push(JSON_value);
+                if (index == 0){
+                    new_li.appendChild(document.createTextNode(value_list[0]+" - "+value_list[1]));
+                    new_li.appendChild(document.createElement('br'));
+                    new_li.appendChild(document.createTextNode("Phone: "+value_list[2]));
+                    new_li.appendChild(document.createElement('br'));
+                    new_li.appendChild(document.createTextNode("Email: "+value_list[3]));
+                }
+                else{
+                    new_li.appendChild(document.createTextNode(value_list[0]));
+                }
+                div_list[index].appendChild(new_li);
+            }
+
+            function sent_data(){
+                let xml = new XMLHttpRequest();
+                xml.open("POST", "{{ url_for('form4') }}", true);
+                data = JSON.stringify({
+                    'references' : j_matrix[0],
+                    'hobbies' : j_matrix[1],
+                });
+                xml.send(data);
+            }
+
+        </script>
+
     </body>
 </html>

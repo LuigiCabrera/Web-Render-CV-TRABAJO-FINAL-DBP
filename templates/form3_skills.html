@@ -9,38 +9,19 @@
     </head>
     <body>
 
-        <form method="post">
-            <p>Achievements</p>
-            <div class="box">
-                
-                {% for str in achievements %}
-                    <li>{{str}}</li>
-                {% endfor %}
-                <br>
-
-                <label>Achievement</label>
-                <textarea name="achievement"></textarea>
-
-                <br>
-                <button formaction="{{ url_for('form3') }}" formmethod="post">Add</button>
-
-            </div>
-
             <p>Skills</p>
             <div class="box">
                
-                {% for s in skills %}
-                    <li>{{s[0]}} - {{s[1]}}</li>
-                {% endfor %}
+                <ul id="skills"></ul>
                 <br>
 
                 <div class="grid_language">
                     <label>Skill</label>
                     <label>Level</label>
 
-                    <input type="text" name="skill">
+                    <input type="text" id="skill">
 
-                    <input list="skills_levels" name="level">
+                    <input list="skills_levels" id="level">
                     <datalist id="skills_levels">
                         <option value="Beginner">
                         <option value="Intermediate">
@@ -49,13 +30,59 @@
                 </div>
                 
                 <br>
-                <button formaction="{{ url_for('form3') }}" formmethod="post">Add</button>
+                <button onclick="add_data(0)">Add Skiil!</button>
+
+            </div>
+
+            <p>Achievements</p>
+            <div class="box">
+                
+                <ul id="achievements"></ul>
+                <br>
+
+                <label>Achievement</label>
+                <textarea id='achievement_txt'></textarea>
+
+                <br>
+                <button onclick="add_data(1)">Add Achievement!</button>
 
             </div>
 
             <br>
-            <button formaction="{{ url_for('form4') }}" formmethod="post">Continue</button>
-
+        <form action="{{ url_for('form4') }}" method="POST">
+            <button onclick="sent_data()">Continue</button>
         </form>
+
+        <script>
+            var j_matrix = [[], []];
+            var div_list = [document.getElementById('skills'), document.getElementById('achievements')];
+            var id_mat = [['skill', 'level'], ['achievement_txt']];
+            function add_data(index){
+                let new_li = document.createElement('li');
+                let JSON_value = "", append_value = ""; 
+                for (let i = 0; i < id_mat[index].length; i++){
+                    JSON_value += document.getElementById(id_mat[index][i]).value;
+                    append_value += document.getElementById(id_mat[index][i]).value;
+                    document.getElementById(id_mat[index][i]).value = "";
+                    if (i != id_mat[index].length-1){
+                        JSON_value += ",";
+                        append_value += " - ";
+                    }
+                }
+                j_matrix[index].push(JSON_value);
+                new_li.appendChild(document.createTextNode(append_value));
+                div_list[index].appendChild(new_li);
+            }
+
+            function sent_data(){
+                let xml = new XMLHttpRequest();
+                xml.open("POST", "{{ url_for('form3') }}", true);
+                data = JSON.stringify({
+                    'skill' : j_matrix[0],
+                    'achievement' : j_matrix[1],
+                });
+                xml.send(data);
+            };
+        </script>
     </body>
 </html>

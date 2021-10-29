@@ -92,7 +92,7 @@
             
             function sent_data(){
                 let xml = new XMLHttpRequest();
-                xml.open("POST", "{{ url_for('form3') }}", true);
+                xml.open("POST", "{{ url_for('form2') }}", true);
                 data = JSON.stringify({
                     'studies' : j_matrix[0],
                     'work' : j_matrix[1],

@@ -27,84 +27,47 @@ def form1():
 
 @app.route("/form2", methods=["POST"])
 def form2():
-    #Viene de form1
     if not session.get("personal_info") or len(session["personal_info"]) == 0: 
         vars_ = ["fname", "lname", "email", "country", "city", 
                 "adress", "phone", "lk", "web", "resume", "degree"]
         session["personal_info"] = [request.form.get(v) for v in vars_]
+    else: #POST JSON DATA (FORM 2)
+        dataJSON = request.get_json(force=True)
+        session["study"] = [li.split(",") for li in dataJSON['studies']]
+        session["work"] = [li.split(",") for li in dataJSON['work']]
+        session["languages"] = [li.split(",") for li in dataJSON['language']]
+        session["achievements"], session["skills"] = None, None
+    return render_template("form2_experience.html")
 
-        session["study"] = []
-        session["work"] = []
-        session["languages"] = []
-
-        session["achievements"] = None
-        session["skills"] = None
-        
-        return render_template("form2_experience.html")
-
-    # Viene de form 2
-        
-    vars = ["y_begin_s", "y_end_s", "title", "study"]
-    fill = [request.form.get(v) for v in vars]
-    if verify_list(fill): session["study"].append(fill)        
-
-    vars = ["y_begin_w", "y_end_w", "job", "work"]
-    fill = [request.form.get(v) for v in vars]
-    if verify_list(fill): session["work"].append(fill) 
-
-    vars = ["language", "level"]
-    fill = [request.form.get(v) for v in vars]
-    if verify_list(fill): session["languages"].append(fill) 
-    
-    return render_template("form2_experience.html", studies=session["study"], work=session["work"], languages=session["languages"])
 
 @app.route("/form3", methods=["POST"])
 def form3():
-
-    # Viene de form 2
     if session["achievements"] == None or session["skills"] == None:
         session["achievements"] = []
         session["skills"] = []
-
-        session["hobbies"] = None
-        session["references"] = None
-
-        dataGet = request.get_json(force=True)
-        print(dataGet)
-
-        return render_template("form3_skills.html")
-
-    fill = request.form.get("achievement")
-    if verify_var(fill): session["achievements"].append(fill)        
-
-    vars = ["skill", "level"]
-    fill = [request.form.get(v) for v in vars]
-    if verify_list(fill): session["skills"].append(fill) 
-    
-    return render_template("form3_skills.html", achievements=session["achievements"], skills=session["skills"])
+    else:
+        dataJSON = request.get_json(force=True)
+        session["skills"] = [li.split(",") for li in dataJSON['skill']]
+        session["achievements"] = dataJSON['achievement']
+        session["hobbies"], session["references"] = None, None
+    return render_template("form3_skills.html")
 
 @app.route("/form4", methods=["POST"])
 def form4():
-
-    # Viene de form 2
     if session["hobbies"] == None or session["references"] == None:
         session["hobbies"] = []
         session["references"] = []
-
-        return render_template("form4_references.html")
-
-    fill = request.form.get("hobbie")
-    if verify_var(fill): session["hobbies"].append(fill)        
-
-    vars = ["name", "job", "email", "phone"]
-    fill = [request.form.get(v) for v in vars]
-    if verify_list(fill): session["references"].append(fill) 
-    
-    return render_template("form4_references.html", hobbies=session["hobbies"], references=session["references"])
+    else:
+        dataJSON = request.get_json(force=True)
+        session["hobbies"] = dataJSON['hobbies']
+        session["references"] = [li.split(",") for li in dataJSON['references']]
+    return render_template("form4_references.html")
 
 @app.route("/curriculum_rendered", methods=["POST"])
 def render_curriculum():
-    return render_template("render_curriculum.html", personal_data=session["personal_info"],
+    #keys = ['personal_info','study','work','languages','achievements','skills','hobbies','references']
+    #for k in keys: print(session[k])
+    return render_template("render_curriculum.html",personal_data=session["personal_info"],
                                                     studies=session["study"],
                                                     works=session["work"],
                                                     languages=session["languages"],
