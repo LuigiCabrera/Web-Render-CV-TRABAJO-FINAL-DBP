@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Curriculum {{personal_data[0]}} {{personal_data[1]}}</title>
+        <style>
+            body{
+                margin: 0px;
+                font-family: Verdana;               
+            }
+            .side_panel{
+                position: absolute;
+                padding: 20px;
+                padding-top: 10px;
+                padding-right: 40px;
+                width: 300px;
+                height: 1fr;
+                
+                background-color:rgb(92, 125, 167);
+                color: rgb(255, 255, 255);
+                
+                font-size: 18px;
+                
+            }
+
+            .subtitle{
+                margin-bottom: 5px;
+                color: rgb(37, 37, 37);
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            img{
+                width: 90%;
+                height: 40%;
+                padding-top: 15px;
+                align-self: center;
+            }
+
+            .main_content{
+                width: 750px;
+                margin-left: 360px;
+                padding: 40px;
+                padding-top: 10px;
+            }
+            
+            .subtitle_2{
+                font-weight: bold;
+                font-size: 20px;
+                margin-top: 25px;
+            }
+
+            .main_section{
+                font-size: 18px;
+            }
+
+            li{
+               padding: 5px; 
+            }
+
+            td{
+                padding: 7px;
+                padding-top: 0px;
+                padding-right: 20px;
+            }
+            
+            .description{
+                margin-top: 10px;
+                margin-left: 155px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="side_panel">
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStPwLNG572lG2QZ9MEI-uNNrA7_bW_A3v9JiKvPl8YHrT5wn6osDxj0c7R75cQipiD_YQ&usqp=CAU" alt="Luigi Cabrera">
+
+            <div class="side_section">
+                <p class="subtitle">Profile</p>
+                <hr>
+                <p>{{personal_data[9]}}</p>
+                
+            </div>
+
+            <div class="side_section">
+                <p class="subtitle">Languages</p>
+                <hr>
+                {% for l in languages %}
+                    <p>{{l[0]}} - {{l[1]}}</p>
+                {% endfor %}
+            </div>
+
+            <div class="side_section">
+                <p class="subtitle">References</p>
+                <hr>
+
+                {% for r in references %}
+                    <p>
+                    {{r[0]}}<br>{{r[1]}}<br>Phone: {{r[3]}}
+                    <br> Email: {{r[2]}}
+                    </p>
+                {% endfor %}
+                
+            </div>
+
+            <div class="side_section">
+                <p class="subtitle">Contact</p>
+                <hr>
+                
+                <p>Web Page: {{personal_data[8]}}</p>
+                <p>Linkedin: {{personal_data[7]}}</p>
+
+                <p>Email: {{personal_data[2]}}</p>
+                <p>Phone: {{personal_data[6]}}</p>
+                <p>Location: {{personal_data[5]}} {{personal_data[4]}}, {{personal_data[3]}}</p>
+            </div>
+
+        </div>
+
+        <div class="main_content">
+            
+            <p style="color: black; font-size: 30px;margin-bottom: 10px;color: rgb(78, 107, 155);">
+            {{personal_data[0]}} {{personal_data[1]}}</p>
+            <p style="color: rgb(88, 88, 88); font-size: 22px;margin-top: 10px;">{{personal_data[10]}}</p>
+            <hr>
+            <div class="main_section">
+                <p class="subtitle_2">Studies</p>
+                <ul>
+                    {% for s in studies %}
+                    <li>({{s[0]}} - {{s[1]}}) - {{s[2]}}</li>
+                    <p class="description"><i>{{s[3]}}</i></p>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="main_section">
+                <p class="subtitle_2">Work Experience</p>
+                <ul>
+                    {% for w in works %}
+                        <li> ({{w[0]}} - {{w[1]}}) - <b>{{w[3]}}</b> </li>
+                        <p class="description"><i>{{w[2]}}</i></p>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="main_section">
+                <p class="subtitle_2">Hobbies or Interest</p>
+                <ul>
+                    {% for h in hobbies %}
+                        <li>{{h}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="main_section">
+                <p class="subtitle_2">Achievements</p>
+                <ul>
+                    {% for a in achievements %}
+                        <li>{{a}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            
+            <div class="main_section">
+                <p class="subtitle_2">Skils</p>
+
+                {% for s in skills %}
+                    <li>{{s[0]}} - {{s[1]}}</li>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Render Your CV!</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/form.css') }}">
+        <style>
+            
+        </style>
+    </head>
+    <body>
+
+        <form method="post">
+
+            <p>Hobbies</p>
+            <div class="box">
+                
+                {% for h in hobbies %}
+                    <li>{{h}}</li>
+                {% endfor %}
+
+                <br>
+                <textarea name="hobbie"></textarea>
+
+                <br>
+                <button formaction="{{ url_for('form4') }}" formmethod="post">Add</button>
+
+            </div>
+            
+            <p>Job References</p>
+            <div class="box">
+                
+                {% for r in references %}
+                    {{r[0]}} - {{r[1]}}<br> {{r[2]}} <br> Phone: {{r[3]}}
+                    <br> <br>
+                {% endfor %}
+                <br>
+
+                <div class="grid_job">
+                    <label>Name</label>
+                    <label>Job</label>
+                    <input type="text" name="name">
+                    <input type="text" name="job">
+
+                    <label>Email</label>
+                    <label>Phone</label>
+                    <input type="text" name="email">
+                    <input type="number" name="phone">
+                </div>
+
+                <br>
+                <button formaction="{{ url_for('form4') }}" formmethod="post">Add</button>
+
+            </div>
+
+            <br>
+            <button formaction="{{ url_for('render_curriculum') }}" formmethod="post">Continue</button>
+
+        </form>
+    </body>
+</html>

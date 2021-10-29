@@ -1,0 +1,82 @@
+body{
+    background-image: url(https://images.all-free-download.com/images/wallpapers_large/windows_vista_original_logon_7246.jpg);
+    background-size: cover;
+    font-family: Arial;
+    margin-top: 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 3fr ;
+    gap: 1em;
+}
+
+.header{
+    grid-column: 1/4;
+    margin: 0px;
+    padding: 20px;
+    width: 1fr;
+    text-align: center;
+    color: white;
+    background-color: rgba(48, 48, 184, 50%);
+    max-height: 400px;
+}
+h1{
+    margin: 0px;
+    font-size: 50px;
+}
+
+h3{
+    font-size: 25px;
+    margin: 10px;
+    padding: 10px;
+    font-weight: bold;
+}
+
+p{
+    font-size: 18px;
+    margin: 10px;
+    margin-bottom: 0px;
+    padding: 10px;
+
+}
+ 
+input{
+    margin: 20px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    padding: 7px;
+    width: 85%;
+    border-radius: 4px;
+    outline: none;
+    font-size: 15px;
+    border-color: grey;
+}
+
+input:hover{
+    border-color: rgb(0, 162, 255);
+}
+
+input:focus{
+    border-color: rgb(0, 162, 255);
+}
+
+
+.box{
+    padding: 15px;
+    background-color:rgb(180, 210, 220);
+    min-width: 100%;
+    max-width: 450px;
+    border-radius: 4px;
+    box-shadow: 5px 3px 3px rgb(75, 75, 75);
+}
+
+button{
+    margin-left: 20px;
+    background-color: #3c993f;
+    border-radius: 4px;
+    border-color: rgb(75, 75, 75);
+    color: white;
+    padding: 12px;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-size: 20px;
+}

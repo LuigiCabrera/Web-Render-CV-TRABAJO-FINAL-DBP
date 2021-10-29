@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LOGED IN SUCCESFULLY</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+    </head>
+    <body>
+        <h1>Hi, you logged in as <br> {{email}}</h1>
+        <form action="{{ url_for('form1') }}" method="POST" ><button> CLick here to start to<br>render your CV!</button></form>
+        
+    </body>
+</html>

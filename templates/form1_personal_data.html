@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Render Your CV!</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/form.css') }}">
+        <style>
+            
+        </style>
+    </head>
+    <body>
+
+        <form action="{{ url_for('form2') }}" method="post">
+
+            <p>Personal Data an Contact Information</p>
+            <div class="box">
+                
+                <div class="grid1">
+                    <label>First Name</label>
+                    <label>Last Name</label>
+                    <input type="text" name="fname" placeholder="Fulanito" required>
+                    <input type="text" name="lname" placeholder="Perez" required>
+
+                    <label>Email</label>
+                    <label>Phone Number</label>
+                    <input type="text" name="email" placeholder="example@gmail.com" required>
+                    <input type="number" name="phone" placeholder="Your Phone Number" required>
+                    
+                    
+                    <label>Country of birth </label>
+                    <label>City of birth </label>
+                    <input type="text" name="country" placeholder="Write a Country" required>
+                    <input type="text" name="city" placeholder="Write a City" required>
+
+                    <label>Adress</label>
+                    <br>
+                    <input type="text" name="adress" placeholder="Write your Adress" required>
+                    
+
+                    <br>
+                    <label>Linkedin</label>
+                    <label>Web Page</label>
+                    <input type="text" name="lk" placeholder="www.linkedin.com/">
+                    <input type="text" name="web" placeholder="Someone.com">
+
+                    <label>Degree / Title</label>
+                    <input class="resume" type="text" name="degree" placeholder="Your Degree" required>
+
+                    <label class="resume">Profile or Resume<br></label>
+                    <textarea class="resume" type="text" name="resume" placeholder="Tell us a little about yourself"></textarea required>
+                </div>
+
+            </div>
+
+            <br>
+            <div class="submit">
+                <br>
+                <button>Continue</button>
+            </div>
+            
+
+        </form>
+    </body>
+</html>

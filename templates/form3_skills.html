@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Render Your CV!</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/form.css') }}">
+        <style>
+            
+        </style>
+    </head>
+    <body>
+
+        <form method="post">
+            <p>Achievements</p>
+            <div class="box">
+                
+                {% for str in achievements %}
+                    <li>{{str}}</li>
+                {% endfor %}
+                <br>
+
+                <label>Achievement</label>
+                <textarea name="achievement"></textarea>
+
+                <br>
+                <button formaction="{{ url_for('form3') }}" formmethod="post">Add</button>
+
+            </div>
+
+            <p>Skills</p>
+            <div class="box">
+               
+                {% for s in skills %}
+                    <li>{{s[0]}} - {{s[1]}}</li>
+                {% endfor %}
+                <br>
+
+                <div class="grid_language">
+                    <label>Skill</label>
+                    <label>Level</label>
+
+                    <input type="text" name="skill">
+
+                    <input list="skills_levels" name="level">
+                    <datalist id="skills_levels">
+                        <option value="Beginner">
+                        <option value="Intermediate">
+                        <option value="Advanced">
+                    </datalist>
+                </div>
+                
+                <br>
+                <button formaction="{{ url_for('form3') }}" formmethod="post">Add</button>
+
+            </div>
+
+            <br>
+            <button formaction="{{ url_for('form4') }}" formmethod="post">Continue</button>
+
+        </form>
+    </body>
+</html>

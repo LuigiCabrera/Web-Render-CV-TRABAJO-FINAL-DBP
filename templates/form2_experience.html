@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Render Your CV!</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/form.css') }}">
+    </head>
+    <body>
+        
+        <p>Studies</p>
+        <div class="box">
+
+            <ul id="studies"></ul>
+            <br>
+            <div class="grid_2">
+                
+                <label>Begin Year</label>
+                <label>End Year</label>
+                <label>Title</label>
+                <label>Place of Study</label>
+
+                <input id="s_beg_y" type="number" name="y_begin_s">
+                <input id="s_end_y" type="number" name="y_end_s">
+                <input id="s_title" type="title" name="title">
+                <input id="s_place" type="text" name="study">
+            </div>
+
+            <button class="no_grid" onclick="add_data(0)">Add Studies!</button>
+
+        </div>
+
+        <p>Work Experience</p>
+        <div class="box">
+            
+            <ul id="works"></ul>
+            <br>
+
+            <div class="grid_2">
+                <label>Begin Year</label>
+                <label>End Year</label>
+                <label>Job Position</label>
+                <label>Work Place</label>
+                <input id="w_beg_y" type="number" name="y_begin_w" >
+                <input id="w_end_y" type="number" name="y_end_w" >
+                <input id="w_position" type="text" name="job" >                    
+                <input id="w_place" type="text" name="work" >
+            </div>
+
+            <button onclick="add_data(1)">Add Work!</button>
+
+        </div>
+
+
+        <p>Languages</p>
+        <div class="box">
+            <ul id="languages"></ul>
+            <br>
+
+            <div class="grid_language">
+                <label>Language</label>
+                <label>Level</label>
+
+                <input id="language" type="text" name="language" >
+                <input id="level" list="language_levels" name="level">
+                <datalist id="language_levels">
+                    <option value="Beginner">
+                    <option value="Intermediate">
+                    <option value="Advanced">
+                    <option value="Native">
+                </datalist>
+            </div>
+            <button onclick="add_data(2)">Add Language!</button>
+            
+
+        </div>
+
+        <br>
+        <div class='submit'>
+            <br>
+            <form action="{{ url_for('form3') }}" method="POST">
+                <button onclick="sent_data()">Continue</button>
+            </form>
+        </div>
+
+        <script>
+            var j_matrix = [[], [], []];
+            var div_list = [document.getElementById('studies'), 
+                            document.getElementById('works'), 
+                            document.getElementById('languages')];
+            var id_mat = [['s_beg_y', 's_end_y', 's_title', 's_place'],
+                          ['w_beg_y', 'w_end_y', 'w_position', 'w_place'],
+                          ['language', 'level']];
+            
+            function sent_data(){
+                let xml = new XMLHttpRequest();
+                xml.open("POST", "{{ url_for('form3') }}", true);
+                data = JSON.stringify({
+                    'studies' : j_matrix[0],
+                    'work' : j_matrix[1],
+                    'language' : j_matrix[2]
+                });
+                xml.send(data);
+            };
+
+            function add_data(index){
+                let value_list = [], jvalue = "", value = "";
+                for (let i = 0; i < id_mat[index].length; i++){
+                    value = String(document.getElementById(id_mat[index][i]).value);
+                    document.getElementById(id_mat[index][i]).value = "";
+                    value_list.push(value);
+                    jvalue += value;
+                    if (i != id_mat[index].length - 1) jvalue+=',';
+                };
+                let new_li = document.createElement('li');
+                if (index == 0 || index == 1) new_li.appendChild(document.createTextNode(value_list[0]+" - "+value_list[1]+" "+value_list[2]+" - "+value_list[3]));
+                else new_li.appendChild(document.createTextNode(value_list[0]+" - "+value_list[1]));
+                div_list[index].appendChild(new_li);
+                j_matrix[index].push(jvalue);
+            };
+
+        </script>
+    </body>
+</html>

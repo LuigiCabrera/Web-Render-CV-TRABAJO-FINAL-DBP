@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/register.css') }}">
+        <title>Register in our Site!</title>
+    </head>
+    <body>
+
+        <script>
+
+            function verify_email(string){
+                if (string.includes('@') && string.includes('.') && string.length > 4) return true;
+                else return false;
+            };
+
+            function verify_password(string){
+                if (string.length >= 5) return true;
+                else return false;
+            };
+
+            function verify_data(){
+                let email_v = true, pass_v = true;
+                if (verify_email(document.querySelector('#email').value) === false){
+                    email_v = false;
+                    document.getElementById('email').style.borderColor = "rgb(255, 180, 166)";
+                    document.getElementById('incorrect_email').innerHTML = 'Write a valid email';
+                }
+                else{
+                    document.getElementById('incorrect_email').innerHTML = '';
+                    document.getElementById('email').style.borderColor = "grey";
+                }
+
+                if (verify_password(document.querySelector('#password').value) === false){
+                    pass_v = false;
+                    document.getElementById('password').style.borderColor = "rgb(255, 180, 166)";
+                    document.getElementById('incorrect_pass').innerHTML = 'Min 5 characteres';
+                }
+                else {
+                    document.getElementById('incorrect_pass').innerHTML = '';
+                    document.getElementById('password').style.borderColor = "grey";
+                }
+
+                if (email_v && pass_v) document.getElementById('submit').disabled = false;
+            };
+
+            function save_data(){
+                let email = document.getElementById('email').value;
+                for (let i = 0; i < localStorage.length; i++){
+                    if (localStorage.key(i) === email){
+                        alert("This email is alredy register!\nPlease Login");
+                        return null
+                    }
+                }
+                localStorage.setItem(email, document.getElementById('password').value);
+                alert("Your have register succesfully!");
+            }
+        </script>
+
+        <div class="header">
+            <h1>Create your Curriculum Vitae with us! <br>
+                Register Here to Start!</h1>
+        </div>
+        <br>
+        <form action="{{ url_for('login') }}" method="post">
+            <div class="box">
+                <h3>Register</h3>
+                <p>Email</p>
+                <input id="email" name="email" type="text" placeholder="Write a valid email" onmouseout="verify_data()" onkeydown="verify_data()">
+                <div style="color: rgb(220, 40, 40);margin:0px;margin-left:20px;" id="incorrect_email"></div>
+                <p>Password</p>
+                <input id="password" name="password" type="password" placeholder="Write your password" onmouseout="verify_data()" onkeydown="verify_data()">
+                <div style="color: rgb(220, 40, 40);margin:0px;margin-left:20px;" id="incorrect_pass"></div>
+                <br><br>
+                <button id="submit" onclick="save_data()" disabled>Register</button>
+                <br><br>
+            </div>
+        </form>
+        
+    </body>
+</html>
