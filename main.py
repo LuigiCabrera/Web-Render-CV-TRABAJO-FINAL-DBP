@@ -17,6 +17,7 @@ def login():
 
 @app.route("/main", methods=["POST"])
 def main():
+    session["plantilla"] = 1
     return render_template("main.html", email=request.form.get('email'))
 
 @app.route("/form1", methods=["POST"])
@@ -66,13 +67,26 @@ def form4():
 def render_curriculum():
     #keys = ['personal_info','study','work','languages','achievements','skills','hobbies','references']
     #for k in keys: print(session[k])
-    return render_template("render_curriculum.html",personal_data=session["personal_info"],
-                                                    studies=session["study"],
-                                                    works=session["work"],
-                                                    languages=session["languages"],
-                                                    achievements=session["achievements"],
-                                                    skills=session["skills"],
-                                                    hobbies=session["hobbies"],
-                                                    references=session["references"])
+    if session["plantilla"] == 1:
+        return render_template("render_curriculum1.html",personal_data=session["personal_info"],studies=session["study"],
+                                                    works=session["work"], languages=session["languages"],
+                                                    achievements=session["achievements"],skills=session["skills"],
+                                                    hobbies=session["hobbies"],references=session["references"])
+    if session["plantilla"] == 2:
+        return render_template("render_curriculum2.html",personal_data=session["personal_info"],studies=session["study"],
+                                                    works=session["work"], languages=session["languages"],
+                                                    achievements=session["achievements"],skills=session["skills"],
+                                                    hobbies=session["hobbies"],references=session["references"])
+    else:
+        return render_template("render_curriculum3.html",personal_data=session["personal_info"],studies=session["study"],
+                                                    works=session["work"], languages=session["languages"],
+                                                    achievements=session["achievements"],skills=session["skills"],
+                                                    hobbies=session["hobbies"],references=session["references"])
 
-
+# PRUEBAS
+@app.route("/render", methods=["GET"])
+def render2():
+    return render_template("render_curriculum1.html",personal_data=session["personal_info"],studies=session["study"],
+                                                    works=session["work"], languages=session["languages"],
+                                                    achievements=session["achievements"],skills=session["skills"],
+                                                    hobbies=session["hobbies"],references=session["references"])

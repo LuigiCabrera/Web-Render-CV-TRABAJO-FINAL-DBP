@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Curriculum {{personal_data[0]}} {{personal_data[1]}}</title>
+        <style>
+            body{
+                margin-top: 15px;
+                display: grid;
+                grid-template-columns: 1fr 4fr 1fr;
+                grid-template-rows: 9fr 1fr;
+                font-family: Arial;
+            }
+            h3{
+                position: relative;
+                color: orange;
+                margin-top: 0px;
+            }
+            p{
+                position: relative;
+            }
+            li{
+                position: relative;
+            }
+            h1{
+                font-size: 1.5em;
+            }
+            h2{
+                font-size: 1em;
+            }
+
+            .principal_info{
+                color: white;
+            }
+
+            #curriculum{
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                column-gap: 20px;
+                row-gap: 10px;
+                background-color: rgb(224, 224, 224);
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+
+            #profile{
+                position: relative;
+                width: 190px;
+                height: 190px;
+                border-radius: 95px;
+                margin: 25px;
+                margin-bottom: 15px;
+            }
+
+            #principal_box{
+                text-align: center;
+                background-color: orange;
+            }
+
+            #ref{
+                grid-column: 1 / 4;
+            }
+
+            #p_ref{
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+            
+            .box{
+                background-color: white;
+                border-radius: 8px;
+                padding: 15px;
+                margin-top: 20px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <br>
+        <div id = "curriculum">
+            <div>
+                <img id="profile" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStPwLNG572lG2QZ9MEI-uNNrA7_bW_A3v9JiKvPl8YHrT5wn6osDxj0c7R75cQipiD_YQ&usqp=CAU">
+                <div class="box" id="principal_box">
+                    <h1 class="principal_info">{{personal_data[0]}} {{personal_data[1]}}</h1>
+                    <h2 class="principal_info">{{personal_data[10]}}</h2>
+                </div>
+                <div class="box">
+                    <h3>Contact</h3>
+                    <p>Web Page:<br>{{personal_data[8]}}</p>
+                    <p>Linkedin:<br>{{personal_data[7]}}</p>
+
+                    <p>Email:<br>{{personal_data[2]}}</p>
+                    <p>Phone:<br>{{personal_data[6]}}</p>
+                    <p>Location:<br>{{personal_data[5]}} {{personal_data[4]}}, {{personal_data[3]}}</p>
+                </div>
+            </div>
+
+            <div>
+                <div class="box">
+                    <h3>Profile</h3>
+                    <p>{{personal_data[9]}}</p>
+                </div>
+
+                <div class="box">
+                    <h3>Hobbies</h3>
+                    <ul>
+                        {% for h in hobbies %}
+                            <li>{{h}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="box">
+                    <h3>Education</h3>
+                    <ul>
+                        {% for s in studies %}
+                            <li>{{s[2]}}  {{s[3]}}<br>({{s[0]}} - {{s[1]}})</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h3>Languages</h3>
+                    <ul>
+                        {% for l in languages %}
+                            <li>{{l[0]}} - {{l[1]}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <div class="box">
+                    <h3>Work Experience</h3>
+                    <ul>
+                        {% for w in works %}
+                            <li>{{w[2]}} in <b>{{w[3]}}</b><br>({{w[0]}} - {{w[1]}})</li>
+                            <p></p>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="box">
+                    <h3>Achievements</h3>
+                    <ul>
+                        {% for a in achievements %}
+                            <li>{{a}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h3>Skills</h3>
+                    <ul>
+                        {% for s in skills %}
+                        <li>{{s[0]}} - {{s[1]}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+            <div id="ref">
+                <hr>
+                <h3>References</h3>
+            </div>
+            
+            {% for r in references %}
+                <div>
+                    <p id="p_ref">
+                        {{r[0]}}<br>{{r[1]}}<br>Phone: {{r[3]}}<br> Email: {{r[2]}}
+                    </p>
+                    <br>
+                </div>
+            {% endfor %}
+            
+
+        </div>
+        <br>
+    </body>
+</html>
