@@ -1,3 +1,4 @@
+from re import template
 from flask import Flask, render_template, request, session, sessions
 from flask_session import Session
 
@@ -13,11 +14,13 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    session['plantilla'] = 0
     return render_template("login.html")
 
 @app.route("/main", methods=["POST"])
 def main():
-    session["plantilla"] = 1
+    if session['plantilla'] == 0: session['plantilla'] = 1
+    else: session['plantilla'] = request.get_json(force=True)['templete']
     return render_template("main.html", email=request.form.get('email'))
 
 @app.route("/form1", methods=["POST"])
@@ -67,7 +70,7 @@ def form4():
 def render_curriculum():
     #keys = ['personal_info','study','work','languages','achievements','skills','hobbies','references']
     #for k in keys: print(session[k])
-    if session["plantilla"] == 1:
+    if session["plantilla"] == 1 or session['plantilla'] == 0:
         return render_template("render_curriculum1.html",personal_data=session["personal_info"],studies=session["study"],
                                                     works=session["work"], languages=session["languages"],
                                                     achievements=session["achievements"],skills=session["skills"],
@@ -83,10 +86,3 @@ def render_curriculum():
                                                     achievements=session["achievements"],skills=session["skills"],
                                                     hobbies=session["hobbies"],references=session["references"])
 
-# PRUEBAS
-@app.route("/render", methods=["GET"])
-def render2():
-    return render_template("render_curriculum1.html",personal_data=session["personal_info"],studies=session["study"],
-                                                    works=session["work"], languages=session["languages"],
-                                                    achievements=session["achievements"],skills=session["skills"],
-                                                    hobbies=session["hobbies"],references=session["references"])

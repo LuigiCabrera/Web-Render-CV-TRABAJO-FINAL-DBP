@@ -2,11 +2,85 @@
 <html>
     <head>
         <title>Loged in Succesfully</title>
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+        <style>
+            body{
+                background-image: url(https://image.shutterstock.com/image-photo/cyber-security-digital-crime-concept-260nw-1811727022.jpg);
+                background-size: cover;
+                font-family: Arial;
+                margin-top: 0px;
+            }
+
+            h1{
+                margin: 0px;
+                padding: 20px;
+                width: 1fr;
+                text-align: center;
+                color: white;
+                background-color: rgba(48, 48, 184, 50%);
+                font-size: 40px;
+            }
+
+            form{
+                margin: 100px;
+                margin-top: 40px;
+                margin-bottom: 20px;
+                display: grid;
+                grid-template-columns: 100%;
+                align-items: center;
+            }
+
+            #grid{
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 350px;
+                align-items: center;
+            }
+
+            #txt{
+                margin-top: 20px;
+                color: white;
+                font-size: 40px;
+                font-weight: bold;
+                right: 50%;
+                transform: translate(50%,50%);
+                position: absolute;
+            }
+
+            img:hover{
+                width: 220px;
+                height: 350px;
+            }
+
+        </style>
     </head>
     <body>
         <h1>Hi, you logged in as <br> {{email}}</h1>
-        <form action="{{ url_for('form1') }}" method="POST" ><button> CLick here to start to<br>render your CV!</button></form>
+
+        <form action="{{ url_for('form1') }}" method="POST" >
+            <div id="grid">
+                <button onclick="set_templete(1)" type="submit" style="border: 0; background: transparent">
+                    <img src="/static/p1.jpg" width="200" height="300" alt="submit" />
+                </button>
+                <button onclick="set_templete(2)" type="submit" style="border: 0; background: transparent">
+                    <img src="/static/p2.jpg" width="200" height="300" alt="submit" />
+                </button>
+                <button onclick="set_templete(3)" type="submit" style="border: 0; background: transparent">
+                    <img src="/static/p3.jpg" width="200" height="300" alt="submit" />
+                </button>
+            </div>
+        </form>
+        <p id="txt">Click One Template!</p>
         
+        <script>
+            function set_templete(n){
+                let xml = new XMLHttpRequest();
+                xml.open("POST", "{{ url_for('main') }}", true);
+                data = JSON.stringify({
+                    'templete': n
+                });
+                xml.send(data);
+            }
+        </script>
+
     </body>
 </html>
